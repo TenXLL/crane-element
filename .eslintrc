@@ -91,6 +91,7 @@
     "prefer-destructuring": "off",
     "vue/no-mutating-props": "off",
     "vue/v-on-event-hyphenation": "off",
-    "vue/no-unused-vars": "off"
+    "vue/no-unused-vars": "off",
+    "import/order": "off"
   }
 }

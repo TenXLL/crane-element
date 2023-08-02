@@ -17,7 +17,7 @@ export default defineConfig({
         text: '基础',
         items: [
           { text: '动态表单', link: '/components/CraneForm/CraneForm' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
+          { text: '动态表格', link: '/components/CraneTable/CraneTable' }
         ]
       }
     ],

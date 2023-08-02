@@ -46,6 +46,7 @@ import { CraneData, Pages, TableColumn } from './types';
 import { reactive, onMounted } from 'vue';
 
 import { ElButton, ElPopconfirm } from 'element-plus';
+import service from '../../../src/http/request';
 
 const param = reactive({
   data: [] as CraneData[],

@@ -1,6 +1,5 @@
 import { App } from 'vue';
 import components from './components/components';
-import ElementPlus from 'element-plus';
 // 所有组件
 export * from './components/components';
 

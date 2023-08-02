@@ -1,6 +1,6 @@
 <template>
   <el-table :data="param.data" border stripe style="width: 100%">
-    <template v-for="(item, index) in param.columns" :key="index">
+    <template v-for="item in param.columns">
       <el-table-column
         :type="item.type"
         :prop="item.key"
@@ -9,7 +9,7 @@
       >
         <template #default="scope">
           <template v-if="item.buttons">
-            <template v-for="(it, i) in item.buttons" :key="i">
+            <template v-for="it in item.buttons">
               <el-button
                 v-if="!it.confirm"
                 :type="it.type"
@@ -85,7 +85,7 @@ const prepareData = () => {
       if (!service) {
         return;
       }
-      service.post(<string>props.data, props.pages).then((res) => {
+      service.post(<string>props.data, props.pages).then((res: any) => {
         if (res.data.records) {
           param.data = res.data.records;
           param.pages.total = res.data.total;

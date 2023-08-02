@@ -164,35 +164,27 @@ const getPropertyOptions = () => {
   }
 };
 
-const setRules = async (): { [key: string]: any } => {
+const setRules = async (): Promise<any> => {
   const required = props.schema?.required;
   const properties = props.schema?.properties;
-
-  const ruleMap = new Map<string, FormRules<any>[]>();
 
   for (const key in props.schema?.properties) {
     // 首先挑选出特定的几个校验项设置校验规则
     if (props.schema?.properties[key]?.format) {
       await getSpecificVerificationMap(
         props.schema?.properties[key]?.format as SpecialFormat,
-        key,
-        ruleMap
+        key
       );
     }
     // 正则设置
     if (props.schema?.properties[key]?.pattern) {
-      await setPattern(
-        props.schema?.properties[key]?.pattern as RegExp,
-        key,
-        ruleMap
-      );
+      await setPattern(props.schema?.properties[key]?.pattern as RegExp, key);
     }
     // 其他条件设置
-    if (properties.schema?.properties[key]?.otherRules) {
+    if (props.schema?.properties[key]?.otherRules) {
       await setOtherRules(
-        properties.schema?.properties[key]?.otherRules,
-        key,
-        ruleMap
+        props.schema?.properties[key]?.otherRules as RuleItem[],
+        key
       );
     }
   }
@@ -202,14 +194,16 @@ const setRules = async (): { [key: string]: any } => {
       return;
     }
     if (!data.rules[item]) {
-      data.rules[item] = [
-        {
-          required: true,
-          message: `请输入${properties[item].title}`,
-          trigger: 'blur'
-        }
-      ];
-    } else {
+      if (properties) {
+        data.rules[item] = [
+          {
+            required: true,
+            message: `请输入${properties[item].title}`,
+            trigger: 'blur'
+          }
+        ];
+      }
+    } else if (properties) {
       data.rules[item].push({
         required: true,
         message: `请输入${properties[item].title}`,
@@ -231,7 +225,7 @@ async function getSpecificVerificationMap(param: SpecialFormat, key: string) {
   }
   if (param === 'mobile') {
     const rule = {
-      validator: (rule: any, value: any, callback: any) => {
+      validator: (_: any, value: any, callback: any) => {
         const regExp = /^1[3456789]\d{9}$/;
         if (!value) {
           callback(new Error('请输入手机号'));
@@ -247,7 +241,7 @@ async function getSpecificVerificationMap(param: SpecialFormat, key: string) {
   }
   if (param === 'email') {
     const rule = {
-      validator: (rule: any, value: any, callback: any) => {
+      validator: (_: any, value: any, callback: any) => {
         const regExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!value) {
           callback(new Error('请输入邮箱'));
@@ -274,7 +268,7 @@ async function setPattern(pattern: RegExp, key: string) {
     data.rules[key] = [];
   }
   const rule = {
-    validator: (rule: any, value: any, callback: any) => {
+    validator: (_: any, value: any, callback: any) => {
       if (!value) {
         callback(new Error('请输入内容'));
       }

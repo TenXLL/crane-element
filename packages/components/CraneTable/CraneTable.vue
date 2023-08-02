@@ -47,17 +47,6 @@ import { reactive, onMounted } from 'vue';
 
 import { ElButton, ElPopconfirm } from 'element-plus';
 
-async function getService() {
-  try {
-    const module = await import('@/CraneTable');
-    return module.default;
-  } catch (error) {
-    console.error('Failed to import CraneTable module:', error);
-    // 进行容错处理，例如使用默认值或者给出错误提示
-    return null;
-  }
-}
-
 const param = reactive({
   data: [] as CraneData[],
   columns: [] as any[],
@@ -80,20 +69,15 @@ onMounted(() => {
 const prepareData = () => {
   if (typeof props.data === 'string') {
     // 在其他地方调用异步函数获取模块
-    getService().then((service) => {
-      // 在这里可以使用获取到的模块
-      if (!service) {
-        return;
+
+    service.post(<string>props.data, props.pages).then((res: any) => {
+      if (res.data.records) {
+        param.data = res.data.records;
+        param.pages.total = res.data.total;
+        param.showPage = true;
+      } else {
+        param.data = res.data;
       }
-      service.post(<string>props.data, props.pages).then((res: any) => {
-        if (res.data.records) {
-          param.data = res.data.records;
-          param.pages.total = res.data.total;
-          param.showPage = true;
-        } else {
-          param.data = res.data;
-        }
-      });
     });
   } else {
     param.data = props.data;

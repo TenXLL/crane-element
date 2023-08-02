@@ -11,7 +11,7 @@ export default defineConfig({
     dts({
       insertTypesEntry: true,
       cleanVueFileName: true,
-      include: 'packages/**/*'
+      include: ['packages/**/*']
     })
   ],
   resolve: {

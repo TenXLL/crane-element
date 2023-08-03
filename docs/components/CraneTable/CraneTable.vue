@@ -1,7 +1,8 @@
 <template>
   <CraneTable
     :pages="data.pages"
-    :data="data.tableData"
+    data="/api/v1.0/menu/menuList"
+    :axios-instance="service"
     :column="data.column"
   />
 </template>
@@ -10,6 +11,7 @@
 import CraneTable from '../../../packages/components/CraneTable/CraneTable.vue';
 import { reactive } from 'vue';
 import { TableColumn } from '../../../packages/components/CraneTable/types';
+import service from '../../../src/http/request';
 
 const data = reactive({
   column: [

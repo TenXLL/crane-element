@@ -3,6 +3,7 @@
   <CraneTable
     :pages="data.pages"
     data="/api/v1.0/menu/menuList"
+    :axios-instance="service"
     :column="data.column"
   />
 </template>
@@ -13,6 +14,7 @@ import { CraneSchema } from '../packages/components/CraneForm/types.ts';
 import CraneTable from '../packages/components/CraneTable/CraneTable.vue';
 import { reactive } from 'vue';
 import { TableColumn } from '../packages/components/CraneTable/types.ts';
+import service from '@/http/request.ts';
 
 const schema: CraneSchema = {
   properties: {

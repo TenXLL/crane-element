@@ -4,6 +4,9 @@ import demo_block from 'vitepress-demoblock';
 export default defineConfig({
   title: "CraneElement",
   description: "一个基于ElementPlus的二次封装动态组件库",
+  head:[
+    ['link', { rel: 'icon', href: '../assets/crane.ico' }]
+  ],
   themeConfig: {
     logo: '../assets/logo.png',
     // https://vitepress.dev/reference/default-theme-config

@@ -6,6 +6,7 @@ import ElementPlus from 'element-plus'
 import CraneElement from '../../../packages/index'
 import 'element-plus/dist/index.css';
 import demo from 'vitepress-demoblock/demo.vue'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 export default {
   extends: Theme,

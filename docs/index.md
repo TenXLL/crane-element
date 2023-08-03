@@ -18,8 +18,8 @@ hero:
       link: /api-examples
 
 features:
-  - title: 只做增强
-    details: 本项目基于ElementPlus开发，只做二次封装
+  - title: 专注增强
+    details: 本项目基于ElementPlus开发，对于一些重复的组件会实现封装
     icon: 🛠️
     
   - title: 使用方便

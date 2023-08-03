@@ -46,7 +46,7 @@ import { CraneData, Pages, TableColumn } from './types';
 import { reactive, onMounted } from 'vue';
 
 import { ElButton, ElPopconfirm } from 'element-plus';
-import service from '../../../src/http/request';
+import { AxiosInstance } from 'axios';
 
 const param = reactive({
   data: [] as CraneData[],
@@ -59,6 +59,7 @@ const props = defineProps<{
   data: string | CraneData[];
   column: TableColumn[];
   pages: Pages;
+  axiosInstance?: AxiosInstance;
 }>();
 
 onMounted(() => {
@@ -70,16 +71,17 @@ onMounted(() => {
 const prepareData = () => {
   if (typeof props.data === 'string') {
     // 在其他地方调用异步函数获取模块
-
-    service.post(<string>props.data, props.pages).then((res: any) => {
-      if (res.data.records) {
-        param.data = res.data.records;
-        param.pages.total = res.data.total;
-        param.showPage = true;
-      } else {
-        param.data = res.data;
-      }
-    });
+    props.axiosInstance
+      .post(<string>props.data, props.pages)
+      .then((res: any) => {
+        if (res.data.records) {
+          param.data = res.data.records;
+          param.pages.total = res.data.total;
+          param.showPage = true;
+        } else {
+          param.data = res.data;
+        }
+      });
   } else {
     param.data = props.data;
   }
